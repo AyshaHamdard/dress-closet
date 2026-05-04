@@ -20,7 +20,9 @@ export default function NavBar({ view, setView, user }: Props) {
   return (
     <nav className="nav">
       {/* TODO: Replace with your app name. */}
-      <span className="brand">My App</span>
+      <span className="brand">Dress Closet</span>
+
+
 
       <button className={cls('home')} onClick={() => setView('home')}>
         Home

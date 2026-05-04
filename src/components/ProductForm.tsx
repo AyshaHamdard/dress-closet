@@ -8,12 +8,12 @@ interface Props {
 }
 
 export default function ProductForm({ product, onSave, onCancel }: Props) {
-  // TODO: Add one useState per field in your Product type. When editing, seed
-  // each state value from `product` so the form is pre-populated.
-  //
-  // Example:
-  // const [title, setTitle] = useState(product?.title ?? '');
-  // const [rating, setRating] = useState(product?.rating ?? 0);
+  const [name, setName] = useState(product?.name ?? '');
+  const [brand, setBrand] = useState(product?.brand ?? '');
+  const [color, setColor] = useState(product?.color ?? '');
+  const [size, setSize] = useState(product?.size ?? '');
+  const [price, setPrice] = useState(product?.price ?? '');
+  const [description, setDescription] = useState(product?.description ?? '');
 
   const [error, setError] = useState<string | null>(null);
 
@@ -21,51 +21,88 @@ export default function ProductForm({ product, onSave, onCancel }: Props) {
     e.preventDefault();
     setError(null);
 
-    // TODO: Validate required fields, then call onSave with them.
-    //
-    // if (!title.trim()) {
-    //   setError('Title is required');
-    //   return;
-    // }
-    // onSave({ title, rating, ... });
+    // basic validation
+    if (!name.trim()) {
+      setError('Name is required');
+      return;
+    }
 
-    onSave({});
+    onSave({
+      name,
+      brand,
+      color,
+      size,
+      price: Number(price),
+      description,
+    });
   }
 
   return (
     <div>
-      <h2>{product ? 'Edit Item' : 'Add New Item'}</h2>
+      <h2>{product ? 'Edit Dress' : 'Add New Dress'}</h2>
+
       {error && <p className="error">{error}</p>}
 
-      <form onSubmit={handleSubmit} style={{ maxWidth: 520 }}>
-        {/* TODO: Add one labeled <input> per field.
+      <form onSubmit={handleSubmit} style={{ maxWidth: 520, display: 'flex', flexDirection: 'column', gap: 10 }}>
 
-            <label>
-              Title
-              <input
-                type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                required
-              />
-            </label>
+        <label>
+          Name
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </label>
 
-            <label>
-              Rating
-              <input
-                type="number"
-                min={0}
-                max={10}
-                value={rating}
-                onChange={(e) => setRating(Number(e.target.value))}
-              />
-            </label>
-        */}
+        <label>
+          Brand
+          <input
+            type="text"
+            value={brand}
+            onChange={(e) => setBrand(e.target.value)}
+          />
+        </label>
+
+        <label>
+          Color
+          <input
+            type="text"
+            value={color}
+            onChange={(e) => setColor(e.target.value)}
+          />
+        </label>
+
+        <label>
+          Size
+          <input
+            type="text"
+            value={size}
+            onChange={(e) => setSize(e.target.value)}
+          />
+        </label>
+
+        <label>
+          Price
+          <input
+            type="number"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+          />
+        </label>
+
+        <label>
+          Description
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+        </label>
 
         <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
           <button className="primary" type="submit">
-            {product ? 'Save Changes' : 'Add Item'}
+            {product ? 'Save Changes' : 'Add Dress'}
           </button>
+
           <button type="button" onClick={onCancel}>
             Cancel
           </button>
